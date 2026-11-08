@@ -1,0 +1,26 @@
+name: X86-MyOwn
+on:
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  Build:
+    uses: ./.github/workflows/Build-OpenWrt.yml
+    permissions:
+      contents: write
+      actions: write
+    with:
+      repo_url: https://github.com/immortalwrt/immortalwrt.git
+      repo_branch: openwrt-25.12
+      config_file: configs/x86-myown.config
+      firmware_tag: x86-myown
+      kernel_file: kernel-6.12
+      artifact_prefix: x86.myown
+      manifest_file: immortalwrt-x86-64-generic.manifest
+      remove_sqm_scripts_nss: true
+      release_summary: >-
+        独立配置X86固件，自带docker、ttyd、lucky、smartdns，插件独立，不与IPQ807X共用配置。
